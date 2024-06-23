@@ -32,7 +32,20 @@ class _TaskPage3State extends State<TaskPage3>{
                   padding: const EdgeInsets.all(64),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed:{
+        //   onPressed:{
+        //       Navigator.of(context)
+        //       .push(MaterialPageRoute(builder: (context){
+        //         return const TaskPage3Add();
+        //         })
+        //       );
+        //   if (newListText != null){
+        //     setState(() {
+        //       todoList.add(newListText);
+        //     });
+        //   }
+        //   },
+          onPressed: () async {
+            final newListText = await
               Navigator.of(context)
               .push(MaterialPageRoute(builder: (context){
                 return const TaskPage3Add();
@@ -44,19 +57,6 @@ class _TaskPage3State extends State<TaskPage3>{
             });
           }
           },
-          // onPressed: () async {
-          //   final newListText = await
-          //     Navigator.of(context)
-          //     .push(MaterialPageRoute(builder: (context){
-          //       return const TaskPage3Add();
-          //       })
-          //     );
-          // if (newListText != null){
-          //   setState(() {
-          //     todoList.add(newListText);
-          //   });
-          // }
-          // },
           child:const Icon(Icons.add),
         ),
       );
