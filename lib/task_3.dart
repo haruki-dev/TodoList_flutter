@@ -22,28 +22,24 @@ class _TaskPage3State extends State<TaskPage3>{
         body: ListView.builder(
           itemCount: todoList.length,
           itemBuilder: (context, index){
-            // return Card(
-            //   child: ListTile(
-            //     title:Text(todoList[index])
-            //   )
-            // );
-            return Text(todoList[index]);
+            return Card(
+              child: ListTile(
+                title:Text(todoList[index]),
+                trailing: IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: (){
+                    setState(() {
+                      todoList.removeAt(index);
+                    });
+                  } ,
+                ),
+              )
+            );
+            // return Text(todoList[index]);
           },        
-                  padding: const EdgeInsets.all(64),
+          padding: const EdgeInsets.all(32),
         ),
         floatingActionButton: FloatingActionButton(
-        //   onPressed:{
-        //       Navigator.of(context)
-        //       .push(MaterialPageRoute(builder: (context){
-        //         return const TaskPage3Add();
-        //         })
-        //       );
-        //   if (newListText != null){
-        //     setState(() {
-        //       todoList.add(newListText);
-        //     });
-        //   }
-        //   },
           onPressed: () async {
             final newListText = await
               Navigator.of(context)
@@ -57,6 +53,16 @@ class _TaskPage3State extends State<TaskPage3>{
             });
           }
           },
+        //   onPressed:{
+        //       Navigator.of(context)
+        //       .push(MaterialPageRoute(builder: (context){
+        //         return const TaskPage3Add();
+        //         })
+        //       );
+        //   if (newListText != null){
+        //     setState(() {
+        //       todoList.add(newListText);
+        //     });
           child:const Icon(Icons.add),
         ),
       );

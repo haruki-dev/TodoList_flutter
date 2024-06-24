@@ -45,30 +45,22 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
         ),
         // body: const Center( 
-        body:  Stack( 
-          children: [
-            Column(
+        body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Stack(
-                children: [
                   Container(
                     alignment: Alignment.bottomCenter,
-                    child: const Text('\\ｺﾝﾆﾁﾊ/',),
+                    child: const Text('\\Hello,World!/',),
                   ),
-                ]
-              ),
-              const Image(
-                image:AssetImage('assets/Myicon.png')
-              ),
+              // const Image(
+              //   image:AssetImage('assets/Myicon.png')
+              // ),
               // Image.network('https://icon-pit.com/wp-content/uploads/2020/10/music_headphone_14822.png'),
               // Image(
               //   image:AssetImage('assets/Myicon.png')
               // ),
             ]
           ),
-          ]
-        ),
         drawer: Drawer(
           child: ListView(
           children: [
