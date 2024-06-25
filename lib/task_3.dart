@@ -9,51 +9,69 @@ class TaskPage3 extends StatefulWidget {
   _TaskPage3State createState() => _TaskPage3State();
     }
 
-class _TaskPage3State extends State<TaskPage3>{
+class TodoItem{
+  String text;
+  bool done;
 
+  TodoItem(this.text,this.done);
+}
+
+
+class _TaskPage3State extends State<TaskPage3>{
   List<String> todoList = [];
-  Color _iconColor = Colors.grey;
-  Color _textColor = Colors.black;
+  // final Color<bool> _iconColor = false;
+  // final Color<bool> _textColor = false;
+  final List<bool> _todoListStates = List.filled(todoList.length, false); 
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('リスト追加'),
-        ),
-        body: ListView.builder(
-          itemCount: todoList.length,
-          itemBuilder: (context, index){
-            return Card(
-              child: ListTile(
-                title:Text(
-                  todoList[index],
-                  style: TextStyle(color: _textColor),),
-                leading: IconButton(
-                  onPressed: (){
-                    setState(() {
-                    _iconColor = _iconColor == Colors.blue ? Colors.grey : Colors.blue;
-                    _textColor = _textColor == Colors.black ? Colors.grey : Colors.black;
-                    });
-                  },
-                  icon: Icon(
-                    Icons.circle,
-                    color: _iconColor,),
-                ),
-                trailing: IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: (){
-                    setState(() {
-                      todoList.removeAt(index);
-                    });
-                  } ,
-                ),
-              )
-            );
-            // return Text(todoList[index]);
-          },        
-          padding: const EdgeInsets.all(32),
-        ),
+      appBar: AppBar(
+        title: const Text('リスト追加'),
+      ),
+      body: ListView.builder(
+        itemCount: todoList.length,
+        itemBuilder: (context, index){
+          return Card(
+            child: ListTile(
+              leading: IconButton(
+                icon: Icon(Icons.circle,
+                  color: _todoListStates[index] ? Colors.grey : Colors.green,
+                  
+                  // color: _todoListStates,
+                  ),
+                onPressed: (){
+                  setState(() {
+                    _todoListStates[index] = !_todoListStates[index];
+                  });
+                    
+                    // todoList[index];
+                    //   _iconColor = _iconColor == Colors.blue ? Colors.grey : Colors.blue;
+                    //   _textColor = _textColor == Colors.black ? Colors.grey : Colors.black;
+                },
+              ),
+              title:Text(
+                ("$index : ${todoList[index]}"),
+                style: TextStyle(
+                  // color: _textColor
+                  ),
+                  ),
+              trailing: IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: (){
+                  setState(() {
+                    todoList.removeAt(index);
+                  });
+                } ,
+              ),
+            ),
+          );
+        },
+        padding: const EdgeInsets.all(32),
+      ),
+      // return Text(todoList[index]);
+      
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             final newListText = await
@@ -80,7 +98,7 @@ class _TaskPage3State extends State<TaskPage3>{
         //     });
           child:const Icon(Icons.add),
         ),
-      );
+    );
   }
 }
 
@@ -98,6 +116,7 @@ class TaskPage3Add extends StatefulWidget{
 class _TaskPage3AddState extends State<TaskPage3Add> {
 
   String _text='';
+
 
   @override
   Widget build(BuildContext context) {
