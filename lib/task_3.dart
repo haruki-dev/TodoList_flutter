@@ -12,6 +12,8 @@ class TaskPage3 extends StatefulWidget {
 class _TaskPage3State extends State<TaskPage3>{
 
   List<String> todoList = [];
+  Color _iconColor = Colors.grey;
+  Color _textColor = Colors.black;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,20 @@ class _TaskPage3State extends State<TaskPage3>{
           itemBuilder: (context, index){
             return Card(
               child: ListTile(
-                title:Text(todoList[index]),
+                title:Text(
+                  todoList[index],
+                  style: TextStyle(color: _textColor),),
+                leading: IconButton(
+                  onPressed: (){
+                    setState(() {
+                    _iconColor = _iconColor == Colors.blue ? Colors.grey : Colors.blue;
+                    _textColor = _textColor == Colors.black ? Colors.grey : Colors.black;
+                    });
+                  },
+                  icon: Icon(
+                    Icons.circle,
+                    color: _iconColor,),
+                ),
                 trailing: IconButton(
                   icon: const Icon(Icons.close),
                   onPressed: (){
