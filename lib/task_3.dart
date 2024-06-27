@@ -9,21 +9,10 @@ class TaskPage3 extends StatefulWidget {
   _TaskPage3State createState() => _TaskPage3State();
     }
 
-class TodoItem{
-  String text;
-  bool done;
-
-  TodoItem(this.text,this.done);
-}
-
-
 class _TaskPage3State extends State<TaskPage3>{
-  // final Color<bool> _iconColor = false;
-  // final Color<bool> _textColor = false;
+
   List<Map<String, Object>> todoList = [];
-
   // final List<bool> _todoListStates = List.filled(todoList.length, false); 
-
 
   @override
   Widget build(BuildContext context) {
@@ -39,23 +28,17 @@ class _TaskPage3State extends State<TaskPage3>{
               leading: IconButton(
                 icon: Icon(Icons.circle,
                 color: (todoList[index]['done'] as bool) ? Colors.green : Colors.grey,
-
-
                   ),
                 onPressed: (){
                   setState(() {
                     todoList[index]['done'] = !(todoList[index]['done'] as bool);
                   });
-                    
-                    // todoList[index];
-                    //   _iconColor = _iconColor == Colors.blue ? Colors.grey : Colors.blue;
-                    //   _textColor = _textColor == Colors.black ? Colors.grey : Colors.black;
                 },
               ),
               title:Text(
                 todoList[index]['text'] as String,
                 style: TextStyle(
-                  color: (todoList[index]['done'] as bool) ? Colors.green : Colors.grey,
+                  color: (todoList[index]['done'] as bool) ? Colors.grey : Colors.black,
                 ),
               ),
               trailing: IconButton(
@@ -71,32 +54,19 @@ class _TaskPage3State extends State<TaskPage3>{
         },
         padding: const EdgeInsets.all(32),
       ),
-      // return Text(todoList[index]);
-      
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            final newListText = await
-              Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context){
-                return const TaskPage3Add();
+            final newListText = await Navigator.of(context).push(
+              MaterialPageRoute(builder: (context){
+                return const TaskPage3Add(initialText: '',);
                 })
               );
           if (newListText != null){
             setState(() {
-              todoList.add(newListText);
+            todoList.add({'text': newListText, 'done': false});
             });
           }
           },
-        //   onPressed:{
-        //       Navigator.of(context)
-        //       .push(MaterialPageRoute(builder: (context){
-        //         return const TaskPage3Add();
-        //         })
-        //       );
-        //   if (newListText != null){
-        //     setState(() {
-        //       todoList.add(newListText);
-        //     });
           child:const Icon(Icons.add),
         ),
     );
@@ -104,9 +74,10 @@ class _TaskPage3State extends State<TaskPage3>{
 }
 
 class TaskPage3Add extends StatefulWidget{
-  const TaskPage3Add({super.key});
 
-
+  final String  initialText;
+  const TaskPage3Add({super.key, required this.initialText});
+  // const TaskPage3Add({super.key});
   @override
   // ignore: library_private_types_in_public_api
   _TaskPage3AddState createState() => _TaskPage3AddState();
@@ -118,6 +89,11 @@ class _TaskPage3AddState extends State<TaskPage3Add> {
 
   String _text='';
 
+    @override
+  void initState() {  
+  super.initState(); 
+  _text = widget.initialText;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +106,6 @@ class _TaskPage3AddState extends State<TaskPage3Add> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // 入力されたテキストを表示
             Text(_text, style: const TextStyle(color: Colors.blue)),
             const SizedBox(height: 8),
             TextField(
@@ -160,14 +135,6 @@ class _TaskPage3AddState extends State<TaskPage3Add> {
                   child: const Text('キャンセル'),
                 ),
               ),
-            // TextField(
-            //   onChanged: (text) {
-            //     // setState(() {
-            //     //   _text = value;
-            //     // }
-            //     // );
-            //   },
-            // ),
           ],
         ),
       ),
