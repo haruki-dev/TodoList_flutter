@@ -18,10 +18,11 @@ class TodoItem{
 
 
 class _TaskPage3State extends State<TaskPage3>{
-  List<String> todoList = [];
   // final Color<bool> _iconColor = false;
   // final Color<bool> _textColor = false;
-  final List<bool> _todoListStates = List.filled(todoList.length, false); 
+  List<Map<String, Object>> todoList = [];
+
+  // final List<bool> _todoListStates = List.filled(todoList.length, false); 
 
 
   @override
@@ -37,13 +38,13 @@ class _TaskPage3State extends State<TaskPage3>{
             child: ListTile(
               leading: IconButton(
                 icon: Icon(Icons.circle,
-                  color: _todoListStates[index] ? Colors.grey : Colors.green,
-                  
-                  // color: _todoListStates,
+                color: (todoList[index]['done'] as bool) ? Colors.green : Colors.grey,
+
+
                   ),
                 onPressed: (){
                   setState(() {
-                    _todoListStates[index] = !_todoListStates[index];
+                    todoList[index]['done'] = !(todoList[index]['done'] as bool);
                   });
                     
                     // todoList[index];
@@ -52,11 +53,11 @@ class _TaskPage3State extends State<TaskPage3>{
                 },
               ),
               title:Text(
-                ("$index : ${todoList[index]}"),
+                todoList[index]['text'] as String,
                 style: TextStyle(
-                  // color: _textColor
-                  ),
-                  ),
+                  color: (todoList[index]['done'] as bool) ? Colors.green : Colors.grey,
+                ),
+              ),
               trailing: IconButton(
                 icon: const Icon(Icons.close),
                 onPressed: (){
