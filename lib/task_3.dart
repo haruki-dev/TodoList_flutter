@@ -17,18 +17,35 @@ class _TaskPage3State extends State<TaskPage3>{
   List<Map<String, Object>> todoList = [];
   // final List<bool> _todoListStates = List.filled(todoList.length, false); 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
-    _initHive();
+    await _initHive();
   }
+
   Future<void> _initHive() async {
     await Hive.initFlutter();
     box = await Hive.openBox('box1');
   }
 
+  // Future<void> _initHive() async {
+  //   await Hive.initFlutter();
+  //   box = await Hive.openBox('box1');
+  // }
+
+  void textGet() {
+    final storedList =  box.get('box1', defaultValue:<Map<String, dynamic>>[]);
+    setState(() {
+      storedList;
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    // todoList = box.get('box1', defaultValue: todoList[index]['text'] as String,);
+    // todoList = box.get('box1', defaultValue:'' as List);
+    textGet();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('リスト追加'),
@@ -36,8 +53,6 @@ class _TaskPage3State extends State<TaskPage3>{
       body: ListView.builder(
         itemCount: todoList.length,
         itemBuilder: (context, index){
-          String _text = '';
-          _text = box.get('text', defaultValue:'');
           return Card(
             child: ListTile(
               leading: IconButton(
@@ -51,10 +66,11 @@ class _TaskPage3State extends State<TaskPage3>{
                 },
               ),
               title:Text(
-                box.get('box1',
+                // box.get('box1',
+                // defaultValue: todoList[index]['text'] as String,
                 // defaultValue: _text
-                defaultValue: todoList[index]['text'] as String,
-                ),
+                todoList[index]['text'] as String,
+                // ),
                 style: TextStyle(
                   color: (todoList[index]['done'] as bool) ? Colors.grey : Colors.black,
                 ),
@@ -115,6 +131,13 @@ class _TaskPage3AddState extends State<TaskPage3Add> {
   _text = widget.initialText;
   }
 
+  void textSave(){
+    setState(() {
+      box.put('todoList', _text);
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,10 +165,10 @@ class _TaskPage3AddState extends State<TaskPage3Add> {
               child: ElevatedButton(
                 onPressed: () {
                   // _text = value;
-                  box.put('box1', _text);
-                  Navigator.of(context).pop(
-                    _text
-                    );
+                  // box.put('box1', _text);
+                  // textSave(),
+                  textSave();
+                  Navigator.of(context).pop(_text);
                 },
                 child: const Text('リスト追加', style: TextStyle(color: Colors.black)),
               ),
