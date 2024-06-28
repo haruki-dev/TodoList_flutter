@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 // import 'classes.dart';
 import 'task_1.dart';
 import 'task_2.dart';
 import 'task_3.dart';
 
+late Box box;
 
-void main() {
+Future<void> main()async {
+  await Hive.initFlutter();
+  box = await Hive.openBox('box1');
   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
@@ -38,6 +42,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,6 +123,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               onTap: (){
+          //                 String _text = '';
+          // _text = box.get('text', defaultValue:'');
+
                 Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context){
                     return const TaskPage3(title: 'TodoList',);
