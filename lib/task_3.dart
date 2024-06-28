@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+late Box box;
 
 class TaskPage3 extends StatefulWidget {
   const TaskPage3({super.key, required this.title});
   final String title;
-  
+
   @override
   // ignore: library_private_types_in_public_api
   _TaskPage3State createState() => _TaskPage3State();
@@ -13,6 +16,16 @@ class _TaskPage3State extends State<TaskPage3>{
 
   List<Map<String, Object>> todoList = [];
   // final List<bool> _todoListStates = List.filled(todoList.length, false); 
+  @override
+  void initState() {
+    super.initState();
+    _initHive();
+  }
+  Future<void> _initHive() async {
+    await Hive.initFlutter();
+    box = await Hive.openBox('box1');
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +36,8 @@ class _TaskPage3State extends State<TaskPage3>{
       body: ListView.builder(
         itemCount: todoList.length,
         itemBuilder: (context, index){
+          String _text = '';
+          _text = box.get('text', defaultValue:'');
           return Card(
             child: ListTile(
               leading: IconButton(
@@ -36,7 +51,10 @@ class _TaskPage3State extends State<TaskPage3>{
                 },
               ),
               title:Text(
-                todoList[index]['text'] as String,
+                box.get('box1',
+                // defaultValue: _text
+                defaultValue: todoList[index]['text'] as String,
+                ),
                 style: TextStyle(
                   color: (todoList[index]['done'] as bool) ? Colors.grey : Colors.black,
                 ),
@@ -61,9 +79,11 @@ class _TaskPage3State extends State<TaskPage3>{
                 return const TaskPage3Add(initialText: '',);
                 })
               );
+              // String _text='';
           if (newListText != null){
             setState(() {
             todoList.add({'text': newListText, 'done': false});
+            // box.put('box1', _text);
             });
           }
           },
@@ -112,6 +132,7 @@ class _TaskPage3AddState extends State<TaskPage3Add> {
               onChanged: (String value) {
                 setState(() {
                   _text = value;
+                  // box.put('text', _text);
                 });
               },
             ),
@@ -120,7 +141,11 @@ class _TaskPage3AddState extends State<TaskPage3Add> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).pop(_text);
+                  // _text = value;
+                  box.put('box1', _text);
+                  Navigator.of(context).pop(
+                    _text
+                    );
                 },
                 child: const Text('リスト追加', style: TextStyle(color: Colors.black)),
               ),
