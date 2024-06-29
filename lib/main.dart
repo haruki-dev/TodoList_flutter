@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 // import 'classes.dart';
 import 'task_1.dart';
 import 'task_2.dart';
 import 'task_3.dart';
 
 
-void main() {
+late Box box;
+
+
+Future<void> main() async{
+  await Hive.initFlutter();
   runApp(const MyApp());
+// void main() {
+//   runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

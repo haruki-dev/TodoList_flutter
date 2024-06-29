@@ -17,34 +17,30 @@ class _TaskPage3State extends State<TaskPage3>{
   List<Map<String, Object>> todoList = [];
   // final List<bool> _todoListStates = List.filled(todoList.length, false); 
   @override
-  void initState() async {
+
+  void initState(){
     super.initState();
-    await _initHive();
+    _initHive();
   }
 
   Future<void> _initHive() async {
-    await Hive.initFlutter();
+    // await Hive.initFlutter();
     box = await Hive.openBox('box1');
   }
 
-  // Future<void> _initHive() async {
-  //   await Hive.initFlutter();
-  //   box = await Hive.openBox('box1');
-  // }
-
-  void textGet() {
+  Future<void> textGet()async {
+    // box = await Hive.openBox('box1');
     final storedList =  box.get('box1', defaultValue:<Map<String, dynamic>>[]);
     setState(() {
       storedList;
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     // todoList = box.get('box1', defaultValue: todoList[index]['text'] as String,);
     // todoList = box.get('box1', defaultValue:'' as List);
-    textGet();
+    // textGet();
 
     return Scaffold(
       appBar: AppBar(
