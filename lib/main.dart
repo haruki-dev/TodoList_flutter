@@ -9,8 +9,9 @@ import 'task_3.dart';
 late Box box;
 
 
-Future<void> main() async{
+void main() async{
   await Hive.initFlutter();
+  await Hive.openBox('mybox');
   runApp(const MyApp());
 // void main() {
 //   runApp(const MyApp());

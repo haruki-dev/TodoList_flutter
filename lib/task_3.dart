@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-late Box box;
+// late Box box;
 
 class TaskPage3 extends StatefulWidget {
   const TaskPage3({super.key, required this.title});
@@ -16,31 +16,39 @@ class _TaskPage3State extends State<TaskPage3>{
 
   List<Map<String, Object>> todoList = [];
   // final List<bool> _todoListStates = List.filled(todoList.length, false); 
-  @override
+  final myBox =  Hive.box('mybox');
+  // @override
 
-  void initState(){
-    super.initState();
-    _initHive();
+  // void initState(){
+  //   super.initState();
+  //   _initHive();
+  // }
+
+  // void _initHive() {
+  //   // await Hive.initFlutter();
+  // }
+  
+  void _loadData() {
+    todoList = myBox.get('mybox');
   }
 
-  Future<void> _initHive() async {
-    // await Hive.initFlutter();
-    box = await Hive.openBox('box1');
+
+  void _saveData() {
+    todoList = myBox.put('mybox',todoList) as List<Map<String, Object>>;
   }
 
-  Future<void> textGet()async {
-    // box = await Hive.openBox('box1');
-    final storedList =  box.get('box1', defaultValue:<Map<String, dynamic>>[]);
-    setState(() {
-      storedList;
-    });
-  }
+  // Future<void> textGet()async {
+  //   // box = await Hive.openBox('mybox');
+  //   final todoList =  await box.get('mybox', defaultValue:todoList);
+  //   setState(() {
+  //     todoList;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    // todoList = box.get('box1', defaultValue: todoList[index]['text'] as String,);
-    // todoList = box.get('box1', defaultValue:'' as List);
-    // textGet();
+    // todoList = box.get('mybox', defaultValue: todoList[index]['text'] as String,);
+    // todoList = box.get('mybox', defaultValue:'' as List);
 
     return Scaffold(
       appBar: AppBar(
@@ -62,9 +70,9 @@ class _TaskPage3State extends State<TaskPage3>{
                 },
               ),
               title:Text(
-                // box.get('box1',
+                // _mybox.get('mybox',
                 // defaultValue: todoList[index]['text'] as String,
-                // defaultValue: _text
+                // defaultValue: ''_text
                 todoList[index]['text'] as String,
                 // ),
                 style: TextStyle(
@@ -95,7 +103,8 @@ class _TaskPage3State extends State<TaskPage3>{
           if (newListText != null){
             setState(() {
             todoList.add({'text': newListText, 'done': false});
-            // box.put('box1', _text);
+            todoList;
+            // _mybox.put('mybox', _text);
             });
           }
           },
@@ -121,6 +130,10 @@ class _TaskPage3AddState extends State<TaskPage3Add> {
 
   String _text='';
 
+  // final TaskPage3 aaa;
+
+  // _TaskPage3AddState(this.aaa);
+
     @override
   void initState() {  
   super.initState(); 
@@ -128,8 +141,9 @@ class _TaskPage3AddState extends State<TaskPage3Add> {
   }
 
   void textSave(){
+    Navigator.of(context).pop(_text);
     setState(() {
-      box.put('todoList', _text);
+      // _mybox.put('mybox', _text);
     });
   }
 
@@ -151,7 +165,8 @@ class _TaskPage3AddState extends State<TaskPage3Add> {
               onChanged: (String value) {
                 setState(() {
                   _text = value;
-                  // box.put('text', _text);
+
+                  // _mybox.put('text', _text);
                 });
               },
             ),
@@ -160,13 +175,16 @@ class _TaskPage3AddState extends State<TaskPage3Add> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  // _text = value;
-                  // box.put('box1', _text);
-                  // textSave(),
-                  textSave();
                   Navigator.of(context).pop(_text);
+                  setState(() {
+                  // todoList;
+                  });
                 },
                 child: const Text('リスト追加', style: TextStyle(color: Colors.black)),
+                  // _text = value;
+                  // _mybox.put('mybox', _text);
+                  // textSave();
+                  // Navigator.of(context).pop(_text);
               ),
             ),
             const SizedBox(height: 8),
