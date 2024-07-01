@@ -1,56 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-// late Box box;
+
+
+
+
 
 class TaskPage3 extends StatefulWidget {
   const TaskPage3({super.key, required this.title});
   final String title;
 
   @override
-  // ignore: library_private_types_in_public_api
   _TaskPage3State createState() => _TaskPage3State();
     }
+
+
+
+
 
 class _TaskPage3State extends State<TaskPage3>{
 
   List<Map<String, Object>> todoList = [];
-  // final List<bool> _todoListStates = List.filled(todoList.length, false); 
-  final myBox =  Hive.box('mybox');
-  // @override
 
-  // void initState(){
-  //   super.initState();
-  //   _initHive();
-  // }
+  Box<dynamic> _myBox =  Hive.box('mybox'); 
 
-  // void _initHive() {
-  //   // await Hive.initFlutter();
-  // }
-  
-  void _loadData() {
-    todoList = myBox.get('mybox');
+  void saveData() {
+    _myBox.put('text', todoList);
+    // print(_myBox.get('text'));
   }
 
-
-  void _saveData() {
-    todoList = myBox.put('mybox',todoList) as List<Map<String, Object>>;
+  void loadData() {
+    var data = _myBox.get('text');
+    // print(_myBox.get('text'));
+    setState(() {
+    todoList = data;
+      
+    });
+    // print(todoList);
   }
 
-  // Future<void> textGet()async {
-  //   // box = await Hive.openBox('mybox');
-  //   final todoList =  await box.get('mybox', defaultValue:todoList);
-  //   setState(() {
-  //     todoList;
-  //   });
-  // }
+  // String text1 = loadData();
+
 
   @override
   Widget build(BuildContext context) {
-    // todoList = box.get('mybox', defaultValue: todoList[index]['text'] as String,);
-    // todoList = box.get('mybox', defaultValue:'' as List);
-
-    return Scaffold(
+        return Scaffold(
       appBar: AppBar(
         title: const Text('リスト追加'),
       ),
@@ -70,12 +64,9 @@ class _TaskPage3State extends State<TaskPage3>{
                 },
               ),
               title:Text(
-                // _mybox.get('mybox',
-                // defaultValue: todoList[index]['text'] as String,
-                // defaultValue: ''_text
-                todoList[index]['text'] as String,
-                // ),
-                style: TextStyle(
+                  // loadData as String,
+                  todoList[index]['text'] as String,
+                  style: TextStyle(
                   color: (todoList[index]['done'] as bool) ? Colors.grey : Colors.black,
                 ),
               ),
@@ -97,16 +88,15 @@ class _TaskPage3State extends State<TaskPage3>{
             final newListText = await Navigator.of(context).push(
               MaterialPageRoute(builder: (context){
                 return const TaskPage3Add(initialText: '',);
-                })
-              );
-              // String _text='';
-          if (newListText != null){
-            setState(() {
-            todoList.add({'text': newListText, 'done': false});
-            todoList;
-            // _mybox.put('mybox', _text);
-            });
-          }
+                }
+              )
+            );
+            if (newListText != null){
+              setState(() {
+                todoList.add({'text': newListText, 'done': false});
+                loadData();
+              });
+            }
           },
           child:const Icon(Icons.add),
         ),
@@ -117,34 +107,37 @@ class _TaskPage3State extends State<TaskPage3>{
 class TaskPage3Add extends StatefulWidget{
 
   final String  initialText;
+
+
   const TaskPage3Add({super.key, required this.initialText});
-  // const TaskPage3Add({super.key});
+  
+  
   @override
-  // ignore: library_private_types_in_public_api
   _TaskPage3AddState createState() => _TaskPage3AddState();
-    }
+
+  
+}
 
 
 
 class _TaskPage3AddState extends State<TaskPage3Add> {
 
+
   String _text='';
 
-  // final TaskPage3 aaa;
 
-  // _TaskPage3AddState(this.aaa);
+final _myBox =  Hive.box('mybox'); 
 
-    @override
-  void initState() {  
-  super.initState(); 
-  _text = widget.initialText;
+  void saveData() {
+    _myBox.put('text', _text);
+    // print(_myBox.get('saving'));
   }
 
-  void textSave(){
-    Navigator.of(context).pop(_text);
-    setState(() {
-      // _mybox.put('mybox', _text);
-    });
+
+
+    @override
+  void initState() {  super.initState(); 
+  _text = widget.initialText;
   }
 
 
@@ -155,36 +148,27 @@ class _TaskPage3AddState extends State<TaskPage3Add> {
           title: const Text('リスト追加'),
         ),
         body: Container(
-                  padding: const EdgeInsets.all(64),
+        padding: const EdgeInsets.all(64),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(_text, style: const TextStyle(color: Colors.blue)),
             const SizedBox(height: 8),
             TextField(
-              onChanged: (String value) {
+              onChanged:(String value) {
                 setState(() {
                   _text = value;
-
-                  // _mybox.put('text', _text);
                 });
               },
             ),
-            // ignore: sized_box_for_whitespace
-            Container(
+              Container(
               width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
+              child: ElevatedButton (
+                onPressed: (){
                   Navigator.of(context).pop(_text);
-                  setState(() {
-                  // todoList;
-                  });
+                  saveData();
                 },
                 child: const Text('リスト追加', style: TextStyle(color: Colors.black)),
-                  // _text = value;
-                  // _mybox.put('mybox', _text);
-                  // textSave();
-                  // Navigator.of(context).pop(_text);
               ),
             ),
             const SizedBox(height: 8),
