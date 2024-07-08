@@ -50,13 +50,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  Box<dynamic> _myBox =  Hive.box('mybox'); 
+  // Box<dynamic> _myBox =  Hive.box('mybox'); 
 
 
-    void loadData() {
-    _myBox.get('text');
-    print(_myBox.get('text'));
-  }
+  //   void loadData() {
+  //   _myBox.get('text');
+  //   print(_myBox.get('text'));
+  // }
 
 
 
@@ -144,7 +144,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   .push(MaterialPageRoute(builder: (context){
                     return const TaskPage3(title: 'TodoList',);
                   }));
-                  loadData();
+                  // loadData();
               },
             ),
             const SizedBox(
