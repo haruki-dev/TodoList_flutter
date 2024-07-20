@@ -5,13 +5,21 @@ import 'task_1.dart';
 import 'task_2.dart';
 import 'task_3.dart';
 
-late Box box;
 
-Future<void> main()async {
+// late Box box;
+
+
+void main() async{
+
   await Hive.initFlutter();
-  box = await Hive.openBox('box1');
+  await Hive.openBox('mybox');
+  await Hive.openBox('text');
   runApp(const MyApp());
+
 }
+
+
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -42,6 +50,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  // Box<dynamic> _myBox =  Hive.box('mybox'); 
+
+
+  //   void loadData() {
+  //   _myBox.get('text');
+  //   print(_myBox.get('text'));
+  // }
+
+
 
 
   @override
@@ -123,13 +141,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               onTap: (){
-          //                 String _text = '';
-          // _text = box.get('text', defaultValue:'');
-
                 Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context){
                     return const TaskPage3(title: 'TodoList',);
                   }));
+                  // loadData();
               },
             ),
             const SizedBox(
