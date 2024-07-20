@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-// import 'classes.dart';
 import 'task_1.dart';
 import 'task_2.dart';
 import 'task_3.dart';
 
 
-// late Box box;
-
 
 void main() async{
-
   await Hive.initFlutter();
   await Hive.openBox('mybox');
   await Hive.openBox('text');
   runApp(const MyApp());
-
 }
 
 
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,116 +37,113 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
+
 class MyHomePage extends StatefulWidget {
+
+
   const MyHomePage({super.key, required this.title});
+
+
   final String title;
-  
+
+
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  // Box<dynamic> _myBox =  Hive.box('mybox'); 
-
-
-  //   void loadData() {
-  //   _myBox.get('text');
-  //   print(_myBox.get('text'));
-  // }
-
-
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        // body: const Center( 
-        body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-                  Container(
-                    alignment: Alignment.bottomCenter,
-                    child: const Text('\\Hello,World!/',),
-                  ),
-              // const Image(
-              //   image:AssetImage('assets/Myicon.png')
-              // ),
-              // Image.network('https://icon-pit.com/wp-content/uploads/2020/10/music_headphone_14822.png'),
-              // Image(
-              //   image:AssetImage('assets/Myicon.png')
-              // ),
-            ]
-          ),
-        drawer: Drawer(
-          child: ListView(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const ListTile(
-              title: Text(
-                "flutter勉強会 課題進捗報告用",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600
-                  ),
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  child: const Text('\\Hello,World!/',),
                 ),
-            ),
-            const SizedBox(
-              height: 20.0,
-              width: double.infinity),
-            ListTile(
-              title: const Text(
-                "課題1 \r\n テキスト切替ボタンを作ってみよう",
-                  style: TextStyle(
-                    fontSize: 12,
-                  ),
+            // const Image(
+            //   image:AssetImage('assets/Myicon.png')
+            // ),
+            // Image.network('https://icon-pit.com/wp-content/uploads/2020/10/music_headphone_14822.png'),
+            // Image(
+            //   image:AssetImage('assets/Myicon.png')
+            // ),
+          ]
+        ),
+      drawer: Drawer(
+        child: ListView(
+        children: [
+          const ListTile(
+            title: Text(
+              "flutter勉強会 課題進捗報告用",
+                style: TextStyle(
+                  fontWeight: FontWeight.w600
                 ),
-              onTap: () => {
-                Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context){
-                    return const TaskPage1();
-                  }))
-              },
-            ),
-            const SizedBox(
-              height: 10.0,
-              width: double.infinity),
-            ListTile(
-              title: const Text(
-                "課題2 \r\n 画面遷移の処理をroute:を使わずに実装してみよう（サイドバー部分がroute:）",
-                  style: TextStyle(
-                    fontSize: 12,
-                  ),
+              ),
+          ),
+          const SizedBox(
+            height: 20.0,
+            width: double.infinity),
+          ListTile(
+            title: const Text(
+              "課題1 \r\n テキスト切替ボタンを作ってみよう",
+                style: TextStyle(
+                  fontSize: 12,
                 ),
-              onTap: (){
-                Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context){
-                    return const TaskPage2();
-                  }));
-              },
-            ),
-            const SizedBox(
-              height: 10.0,
-              width: double.infinity),
-            ListTile(
-              title: const Text(
-                "課題3 \r\n ToDoアプリを作ってみよう",
-                  style: TextStyle(
-                    fontSize: 12,
-                  ),
+              ),
+            onTap: () => {
+              Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context){
+                  return const TaskPage1();
+                }))
+            },
+          ),
+          const SizedBox(
+            height: 10.0,
+            width: double.infinity),
+          ListTile(
+            title: const Text(
+              "課題2 \r\n 画面遷移の処理をroute:を使わずに実装してみよう（サイドバー部分がroute:）",
+                style: TextStyle(
+                  fontSize: 12,
                 ),
-              onTap: (){
-                Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context){
-                    return const TaskPage3(title: 'TodoList',);
-                  }));
-                  // loadData();
-              },
-            ),
-            const SizedBox(
-              height: 10.0,
-              width: double.infinity),
+              ),
+            onTap: (){
+              Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context){
+                  return const TaskPage2();
+                }));
+            },
+          ),
+          const SizedBox(
+            height: 10.0,
+            width: double.infinity),
+          ListTile(
+            title: const Text(
+              "課題3 \r\n ToDoアプリを作ってみよう",
+                style: TextStyle(
+                  fontSize: 12,
+                ),
+              ),
+            onTap: (){
+              Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context){
+                  return const TaskPage3(title: 'TodoList',);
+                }));
+                // loadData();
+            },
+          ),
+          const SizedBox(
+            height: 10.0,
+            width: double.infinity),
           ],
         ),
       ),

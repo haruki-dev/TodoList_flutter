@@ -29,19 +29,10 @@ class _TaskPage3State extends State<TaskPage3>{
 
 
   late List<Map<String, dynamic>> todoList = [];
-  // late List<Map<dynamic,dynamic>> ?todoList = [];
-  
-  
-  // List<String, bool> todoList = [];
 
-
-
-  // Box<List<Map<String, Object>>> _myBox;
   late Box<dynamic> _myBox;
-  // late Box<List<Map<String, Object>>> _myBox = [];
-  // late List<Map<String, Object>> _myBox = [];
 
-// F5でデバッグします。
+
 
   @override
   void initState(){
@@ -49,12 +40,10 @@ class _TaskPage3State extends State<TaskPage3>{
     _myBox =  Hive.box('mybox'); 
     setState(() {
       loadTodoList(); 
-    // _myBox!.get('mybox')!  ;
-    // todoList = _myBox!.get('mybox')!  ;
-    // __TypeErrormyBox.get('mybox') ;
     });
-    // print(_myBox.get('mybox'));
   }
+
+
 
 void loadTodoList() {
   final dynamic rawData = _myBox.get('mybox');
@@ -71,31 +60,6 @@ void loadTodoList() {
     });
   }
 }
-
-  // void loadTodoList(){
-  //   final dynamic rawData = _myBox.get('mybox');
-  //   if (rawData != null && rawData is List) {
-  //     setState(() {
-  //       todoList = rawData.map((item) {
-  //         if (item is Map<String, dynamic>) {
-  //           return item;
-  //         } else {
-  //           // 必要に応じて、itemを適切なMap<String, dynamic>に変換するロジックを追加
-  //           return null;
-  //         }
-  //       }).toList();
-  //     });
-  //   } 
-  // }
-    // else {
-    //   setState(() {
-    //     todoList = [];
-    //   });
-    // }
-  // @override
-  // void createState(){
-  //   super.createState();
-  // }
 
 
 
@@ -125,7 +89,7 @@ void loadTodoList() {
             itemBuilder: (BuildContext context, index){
               
               
-              _myBox.get('mybox');
+              // _myBox.get('mybox');
               print(todoList.length);
               print(todoList[index]['done']);
               print(todoList[index]['text']);
@@ -141,24 +105,18 @@ void loadTodoList() {
                 child: ListTile(
                   leading: IconButton(
                     icon: Icon(Icons.circle,
-                    color: (
-                      todoList[index]['done'] as bool) ? Colors.green : Colors.grey,
-                      // listbool) ? Colors.green : Colors.grey,
-                      ),
+                    color: (todoList[index]['done'] as bool) ? Colors.green : Colors.grey,),
                     onPressed: (){
                       setState(() {
                         todoList[index]['done'] = !(todoList[index]['done'] as bool);
-                        // listbool == !(listbool);
                         overRideData();
                       });
                     },
                   ),
                   title:Text(
                       todoList[index]['text'] as String,
-                      // name,
                       style: TextStyle(
                       color: (todoList[index]['done'] as bool) ? Colors.grey : Colors.black,
-                      // color: (listbool) ? Colors.grey : Colors.black,
                     ),
                   ),
                   trailing: IconButton(
@@ -235,7 +193,6 @@ class _TaskPage3AddState extends State<TaskPage3Add> {
 
   void saveData() {
     _saveText.put('text', _text);
-    // print(_myBox.get('saving'));
   }
 
 
