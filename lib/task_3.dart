@@ -45,21 +45,39 @@ class _TaskPage3State extends State<TaskPage3>{
 
 
 
-void loadTodoList() {
-  final dynamic rawData = _myBox.get('mybox');
-  if (rawData != null && rawData is List) {
-    setState(() {
-      todoList = (rawData as List)
-          .where((item) => item is Map<String, dynamic>)
-          .cast<Map<String, dynamic>>()
-          .toList();
-    });
-  } else {
-    setState(() {
-      todoList = [];
-    });
+  void loadTodoList() {
+    final dynamic rawData = _myBox.get('mybox');
+    if (rawData != null && rawData is List) {
+      List<Map<String, dynamic>> mapList = rawData.map((item) {
+        return Map<String, dynamic>.from(item);
+      }).toList();
+      setState(() {
+        todoList = mapList;
+      });
+    } else {
+      setState(() {
+        todoList = [];
+      });
+    }
   }
-}
+
+
+
+// void loadTodoList() {
+//   final dynamic rawData = _myBox.get('mybox');
+//   if (rawData != null && rawData is List) {
+//     setState(() {
+//       todoList = (rawData as List)
+//           .where((item) => item is Map<String, dynamic>)
+//           .cast<Map<String, dynamic>>()
+//           .toList();
+//     });
+//   } else {
+//     setState(() {
+//       todoList = [];
+//     });
+//   }
+// }
 
 
 

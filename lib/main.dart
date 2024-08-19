@@ -3,14 +3,20 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'task_1.dart';
 import 'task_2.dart';
 import 'task_3.dart';
+import 'task_4.dart';
 
 
 
 void main() async{
-  await Hive.initFlutter();
-  await Hive.openBox('mybox');
-  await Hive.openBox('text');
-  runApp(const MyApp());
+  try{
+    WidgetsFlutterBinding.ensureInitialized();
+    await Hive.initFlutter();
+    await Hive.openBox('mybox');
+    await Hive.openBox('text');
+    runApp(const MyApp());
+  }catch(e){
+    print('errorだよー、例外だよー');
+  }
 }
 
 
@@ -22,6 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
@@ -32,6 +39,7 @@ class MyApp extends StatelessWidget {
         "/task_1": (BuildContext context) => const TaskPage1(),
         "/task_2": (BuildContext context) => const TaskPage2(),
         "/task_3": (BuildContext context) => const TaskPage3(title:'TodoList'),
+        "/task_4": (BuildContext context) => const TaskPage4(title: 'Carousel_App',),
       },
     );
   }
@@ -53,6 +61,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  @override
+  void dispose() {
+    Hive.close();
+    super.dispose();
+  }
 
 
 
@@ -144,6 +158,21 @@ class _MyHomePageState extends State<MyHomePage> {
           const SizedBox(
             height: 10.0,
             width: double.infinity),
+                      ListTile(
+            title: const Text(
+              "課題4 \r\n オリジナルのUIを形成してみよう",
+                style: TextStyle(
+                  fontSize: 12,
+                ),
+              ),
+            onTap: (){
+              Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context){
+                  return const TaskPage4(title: 'Carousel_App',);
+                }));
+                // loadData();
+              },
+            ),
           ],
         ),
       ),
